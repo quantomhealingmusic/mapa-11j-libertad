@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Mapa Mundial En Apoyo Al 11J Por LA LIBERTAD DE TODOS Los Presos Políticos en las Cárceles de Cuba "ABAJO EL COMUNISMO" Y "VIVA LA LIBERTAD DE EXPRESIÓN"</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        #map { height: 600px; width: 100%; }
+        .info { padding: 20px; background: #f4f4f4; margin: 10px; }
+        .interactive { padding: 10px; text-align: center; }
+        .layer-control { padding: 10px; }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h1>Mapa Mundial En Apoyo Al 11J Por LA LIBERTAD DE TODOS Los Presos Políticos en las Cárceles de Cuba "ABAJO EL COMUNISMO" Y "VIVA LA LIBERTAD DE EXPRESIÓN"</h1>
+        <p>Únete a las manifestaciones globales por la libertad. Explora las ubicaciones y horarios en el mapa interactivo.</p>
+    </div>
+    <div id="map"></div>
+    <div class="interactive">
+        <h2>¿Quieres agregar una protesta?</h2>
+        <input type="text" id="location" placeholder="Ubicación">
+        <input type="text" id="date" placeholder="Fecha y hora">
+        <button onclick="addProtest()">Agregar</button>
+    </div>
+    <div class="layer-control">
+        <label><input type="radio" name="layer" onchange="changeLayer('green')" checked> Verde</label>
+        <label><input type="radio" name="layer" onchange="changeLayer('satellite')"> Satélite</label>
+    </div>
+
+    <script>
+        // Inicializa el mapa centrado entre las ciudades
+        var map = L.map('map', { layers: [greenLayer] }).setView([40.0, -20.0], 3);
+
+        // Capas de mapa
+        var greenLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://opentopomap.org/">OpenTopoMap</a> | © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 17
+        });
+
+        var satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+
+        // Añade la capa inicial
+        greenLayer.addTo(map);
+
+        // Marcadores para las protestas
+        L.marker([40.7488, -73.9772]).addTo(map)
+            .bindPopup("<b>Manifestación por Ferrer</b><br>11 de julio de 2025, 6:00 p.m.<br>315 Lexington Ave, NYC<br>Organizada por Nueva York con UNPACU")
+            .openPopup();
+        L.marker([52.5170, 13.3889]).addTo(map)
+            .bindPopup("<b>Protesta por los Derechos Humanos en Cuba</b><br>11 de julio de 2025, 13:00 - 16:00 Uhr<br>Auswärtiges Amt, Werderscher Markt 6, 10117, Berlín")
+            .openPopup();
+        L.marker([38.9058, -77.0488]).addTo(map)
+            .bindPopup("<b>Vigilia Patria y Libertad</b><br>11 de julio de 2025, 7:00 p.m.<br>Embajada de Cuba, Washington D.C.")
+            .openPopup();
+        L.marker([40.4192, -3.7038]).addTo(map)
+            .bindPopup("<b>11 de Julio MADRID - CUBA</b><br>11 de julio de 2025, 12:00 p.m. - 20:00 p.m.<br>Plaza Santo Domingo, Madrid, España")
+            .openPopup();
+        L.marker([25.7652, -80.2455]).addTo(map)
+            .bindPopup("<b>4to Aniversario del J11</b><br>11 de julio de 2025<br>Versailles Restaurant, 3555 SW 8TH ST, Miami, 33135")
+            .openPopup();
+        L.marker([25.7531, -80.2166]).addTo(map)
+            .bindPopup("<b>Museo Americano de la Diáspora Cubana</b><br>11 de julio de 2025, Todo el día<br>1200 Coral Way, Miami, FL")
+            .openPopup();
+
+        // Función para agregar protestas (interactiva pero básica por ahora)
+        function addProtest() {
+            var location = document.getElementById("location").value;
+            var date = document.getElementById("date").value;
+            alert("Protesta agregada: " + location + " - " + date + ". (Nota: Esto es un ejemplo, requiere geocodificación para mapa).");
+        }
+
+        // Cambiar capas
+        function changeLayer(layerType) {
+            map.removeLayer(greenLayer);
+            map.removeLayer(satelliteLayer);
+            if (layerType === 'green') {
+                greenLayer.addTo(map);
+            } else if (layerType === 'satellite') {
+                satelliteLayer.addTo(map);
+            }
+        }
+
+        // Opcional: Íconos personalizados
+        var customIcon = L.icon({
+            iconUrl: 'https://flagcdn.com/h20/cu.png',
+            iconSize: [20, 20]
+        });
+        L.marker([40.7488, -73.9772], {icon: customIcon}).addTo(map);
+        L.marker([52.5170, 13.3889], {icon: customIcon}).addTo(map);
+        L.marker([38.9058, -77.0488], {icon: customIcon}).addTo(map);
+        L.marker([40.4192, -3.7038], {icon: customIcon}).addTo(map);
+        L.marker([25.7652, -80.2455], {icon: customIcon}).addTo(map);
+        L.marker([25.7531, -80.2166], {icon: customIcon}).addTo(map);
+    </script>
+</body>
+</html>
